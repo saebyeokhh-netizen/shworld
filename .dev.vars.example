@@ -1,0 +1,16 @@
+# 로컬 개발용 시크릿 템플릿.
+# 이 파일을 `.dev.vars` 로 복사해서 쓴다 (.dev.vars 는 .gitignore 에 있음).
+# 운영 환경에는 이 파일을 쓰지 않고 `wrangler secret put <NAME>` 으로 등록한다.
+
+# Turnstile 시크릿 키.
+# 아래 값은 Cloudflare 가 공개한 "항상 통과" 테스트 키다 → 계정 없이 로컬 개발 가능.
+# 운영에서는 대시보드에서 발급받은 실제 값으로 교체할 것.
+TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
+
+# DELETE /api/guestbook/:id 에 필요한 관리자 토큰. 16자 이상이어야 동작한다.
+# 생성 예: node -e "console.log(crypto.randomUUID().replace(/-/g,''))"
+ADMIN_TOKEN="dev-admin-token-change-me-0000"
+
+# IP 해시용 솔트. 절대 공개하지 말 것 — 유출되면 ip_hash 를 IP 로 되돌릴 수 있다.
+# 생성 예: node -e "console.log(crypto.randomUUID())"
+IP_SALT="dev-only-salt-change-me"

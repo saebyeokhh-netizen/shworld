@@ -1,0 +1,29 @@
+{
+  "name": "shworld",
+  "version": "1.0.0",
+  "private": true,
+  "description": "shworld — 개인 개발 포트폴리오 (Vite MPA + Cloudflare Workers + D1)",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "content": "node scripts/build-content.mjs",
+    "predev": "npm run content",
+    "dev": "vite",
+    "prebuild": "npm run content",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cf:dev": "npm run build && wrangler dev",
+    "cf:deploy": "npm run build && wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply shworld-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply shworld-db --remote"
+  },
+  "devDependencies": {
+    "marked": "^18.0.9",
+    "vite": "^8.2.1",
+    "wrangler": "^4.123.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "workerd@1.20260811.1": true
+  }
+}
