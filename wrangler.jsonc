@@ -3,7 +3,7 @@
   // 스키마 참고: https://developers.cloudflare.com/workers/wrangler/configuration/
   "$schema": "node_modules/wrangler/config-schema.json",
 
-  "name": "shworld",
+  "name": "wonderful",
   "main": "worker/index.js",
   "compatibility_date": "2026-08-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -30,9 +30,7 @@
     {
       "binding": "DB",
       "database_name": "shworld-db",
-      // TODO: `wrangler d1 create shworld-db` 실행 후 출력된 database_id 를 여기에 붙여넣을 것.
-      //       (이 값이 placeholder 인 동안 --local 개발은 되지만 --remote / deploy 는 실패한다)
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "d3c54f19-873b-41cd-b445-5e1358943f40",
       "migrations_dir": "migrations"
     }
   ],
@@ -41,8 +39,8 @@
   // 시크릿(TURNSTILE_SECRET / ADMIN_TOKEN / IP_SALT)은 절대 여기 쓰지 말고
   // 로컬은 .dev.vars, 운영은 `wrangler secret put` 을 쓴다.
   "vars": {
-    // 기본값은 Cloudflare 공식 테스트 사이트 키(항상 통과).
-    // 실제 키로 바꿀 때는 프론트 주입값(.env 의 VITE_TURNSTILE_SITE_KEY)도 함께 교체할 것.
-    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA"
+    // 운영 사이트 키(공개값). 프론트는 src/js/turnstile.js 의 SITE_KEY 기본값을 쓰므로
+    // 키를 바꿀 때는 그쪽도 함께 교체할 것.
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEWyIkOakKUZLcAp"
   }
 }

@@ -411,6 +411,14 @@ function timelineHtml(timeline) {
     .join("");
 }
 
+// 작품이 0개일 때 카드 자리에 넣는 안내. content/projects/ 에 md 를 추가하면 사라진다.
+function emptyProjectsHtml() {
+  return `<li class="empty-state">
+  <h3>아직 공개한 작품이 없습니다</h3>
+  <p>준비되는 대로 하나씩 올릴 예정입니다.</p>
+</li>`;
+}
+
 function bioHtml(bio) {
   return bio.map((para) => `<p>${esc(para)}</p>`).join("");
 }
@@ -504,7 +512,10 @@ async function loadProjects() {
   } catch {
     throw new Error(`content/projects/ 디렉터리를 읽을 수 없습니다: ${DIR.projects}`);
   }
-  if (files.length === 0) throw new Error("content/projects/ 에 .md 파일이 없습니다.");
+  // 작품이 0개여도 빌드는 통과시킨다. 목록/홈은 비어 있는 상태로 렌더링된다.
+  if (files.length === 0) {
+    console.warn("[content] content/projects/ 에 .md 파일이 없습니다 — 작품 없이 빌드합니다.");
+  }
 
   const projects = [];
   const seen = new Map();
@@ -655,8 +666,8 @@ async function writePartials(projects, profile) {
     "profile.skills": skillsHtml(profile.skills),
     "profile.skillsTop": skillsHtml(profile.skills.slice(0, 4)),
     "profile.timeline": timelineHtml(profile.timeline),
-    "projects.featured": heroFeatured.map(projectCardHtml).join("\n"),
-    "projects.all": projects.map(projectCardHtml).join("\n"),
+    "projects.featured": heroFeatured.map(projectCardHtml).join("\n") || emptyProjectsHtml(),
+    "projects.all": projects.map(projectCardHtml).join("\n") || emptyProjectsHtml(),
     "projects.tagChips": tagChipsHtml(allTags),
     "projects.count": String(projects.length),
     "projects.tagCount": String(allTags.length),

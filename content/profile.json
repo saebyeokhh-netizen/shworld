@@ -1,59 +1,42 @@
 {
-  "name": "김새벽",
+  "name": "SH",
   "handle": "shworld",
-  "role": "Full-stack Developer",
-  "tagline": "작게 만들고, 오래 굴러가게 만듭니다.",
+  "role": "만드는 사람",
+  "tagline": "답답하면 내가 다 만들어버린다.",
   "bio": [
-    "웹 프론트엔드와 엣지 인프라를 함께 다루는 개발자입니다. 브라우저에서 벌어지는 일과 요청이 도달하기까지의 경로를 같이 설계하는 걸 좋아합니다.",
-    "복잡한 프레임워크보다 문제에 딱 맞는 최소한의 도구를 고르는 편입니다. 이 사이트도 프레임워크 없이 바닐라 Vite와 Cloudflare Workers만으로 만들었습니다.",
-    "요즘은 서버리스 환경에서의 데이터 모델링과, 정적 생성으로 밀어낼 수 있는 것과 런타임에 남겨야 하는 것의 경계에 관심이 많습니다."
+    "필요한 게 있으면 일단 직접 만들어보는 편입니다. 남이 만들어주기를 기다리는 것보다, 부딪히면서 배우는 쪽이 빠르다고 생각합니다.",
+    "이 사이트도 그렇게 만들었습니다. 프레임워크 없이 바닐라 JavaScript와 Vite로 화면을 짜고, Cloudflare Workers 하나가 정적 파일과 API를 함께 처리하도록 했습니다. 관리할 서버가 없는 구조를 목표로 잡았습니다.",
+    "요즘은 웹 프론트엔드와 서버리스 환경을 익히고 있습니다. 만든 것들은 여기에 하나씩 쌓아둘 예정입니다."
   ],
-  "location": "Seoul, KR",
-  "email": "hello@shworld.dev",
-  "siteUrl": "https://shworld.dev",
+  "location": "Korea",
+  "email": "saebyeokhh@gmail.com",
+  "siteUrl": "https://wonderful.shworld.workers.dev",
   "links": {
-    "github": "https://github.com/shworld",
-    "linkedin": "https://www.linkedin.com/in/shworld",
-    "blog": "https://blog.shworld.dev"
+    "github": "https://github.com/saebyeokhh-netizen"
   },
   "skills": [
     {
       "category": "Frontend",
-      "items": ["JavaScript (ES2023+)", "TypeScript", "HTML / 시맨틱 마크업", "CSS Architecture", "Vite", "웹 접근성 (WCAG 2.1 AA)"]
+      "items": ["JavaScript", "HTML", "CSS", "Vite"]
     },
     {
       "category": "Backend / Edge",
-      "items": ["Cloudflare Workers", "Node.js", "REST API 설계", "Python", "Go (학습 중)"]
+      "items": ["Cloudflare Workers", "REST API"]
     },
     {
       "category": "Data",
-      "items": ["Cloudflare D1 / SQLite", "PostgreSQL", "Redis", "스키마 마이그레이션"]
+      "items": ["Cloudflare D1 / SQLite"]
     },
     {
       "category": "Infra / Tooling",
-      "items": ["Wrangler", "GitHub Actions", "Docker", "Playwright", "Vitest"]
+      "items": ["Git", "Wrangler"]
     }
   ],
   "timeline": [
     {
-      "period": "2024 — 현재",
-      "title": "프리랜스 / 개인 프로젝트",
-      "description": "엣지 런타임 기반의 작은 서비스들을 직접 설계·운영. 서버 없이 굴러가는 구조를 반복해서 실험하고 있습니다."
-    },
-    {
-      "period": "2022 — 2024",
-      "title": "프론트엔드 엔지니어 — 커머스 플랫폼",
-      "description": "상품 상세·검색 화면을 담당. LCP 4.1초 → 1.6초로 개선하고, 디자인 토큰 기반 CSS 체계를 도입했습니다."
-    },
-    {
-      "period": "2020 — 2022",
-      "title": "웹 개발자 — 사내 도구 팀",
-      "description": "운영팀용 어드민 도구를 만들며 데이터 모델링과 권한 설계를 배웠습니다. 수작업 리포트를 자동화해 주당 12시간을 줄였습니다."
-    },
-    {
-      "period": "2020",
-      "title": "개발 시작",
-      "description": "비전공에서 전향. 첫 커밋부터 지금까지 만든 것을 여기 모아두고 있습니다."
+      "period": "2026 — 현재",
+      "title": "직접 만들기 시작",
+      "description": "필요한 것을 스스로 만들어보는 중입니다. 첫 결과물로 이 포트폴리오 사이트를 프레임워크 없이 만들고 Cloudflare 에 올렸습니다."
     }
   ]
 }
