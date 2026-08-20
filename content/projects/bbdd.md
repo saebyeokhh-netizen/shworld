@@ -6,6 +6,7 @@ tags: [Python, PySide6, Windows, 데스크톱]
 stack: [Python, PySide6, Qt, PyInstaller, pytest]
 date: 2026-08-20
 featured: true
+thumbnail: /img/projects/bbdd.svg
 ---
 
 ## 개요
@@ -15,6 +16,10 @@ featured: true
 화면 위에 항상 떠 있는 작은 버튼 바입니다. 버튼을 누르면 **직전에 쓰던 창에** 내용이 그대로 들어갑니다. 창을 옮겨 다닐 필요가 없습니다.
 
 현재 버전은 2.1.0 입니다.
+
+![복붙답답 버튼 바가 작업 중인 창 위에 떠 있는 모습](/img/projects/bbdd.svg)
+
+*위 그림은 실제 화면을 찍은 것이 아니라 구성을 나타낸 것입니다.*
 
 ## 주요 기능
 
