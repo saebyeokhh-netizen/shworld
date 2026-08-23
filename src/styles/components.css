@@ -1239,6 +1239,47 @@ a.tag:hover {
   font-size: var(--text-xs);
 }
 
+/* ---------- 공유 버튼 ---------- */
+/*
+  같은 버튼이 두 곳에 쓰인다.
+    - 바닥글: 이 파일에서 모양을 잡는다 (알약형 테두리 버튼)
+    - 작품 상세: .btn.btn--ghost 와 함께 붙어 그쪽 모양을 그대로 따른다
+  그래서 아래 규칙은 .btn 이 아닌 경우에만 적용한다. .btn 쪽 값을
+  여기서 덮어썼다가 되돌리려 하면 실제 값을 다시 적어야 해서 어긋나기 쉽다.
+*/
+.share-btn:not(.btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  background: transparent;
+  padding: 0.45em 0.95em;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.share-btn:not(.btn):hover {
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.share-btn:not(.btn) svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+/* 복사 직후 잠깐 강조 — 글자가 바뀐 것을 색으로도 알린다 (두 곳 공통) */
+.share-btn.is-done {
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
 /* ---------- 404 ---------- */
 .notfound {
   display: grid;

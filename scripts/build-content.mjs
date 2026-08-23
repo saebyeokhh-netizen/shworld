@@ -450,6 +450,14 @@ function projectLinkButtons(project) {
       </a>`
     );
   }
+  // 공유는 항상 붙는다 — 링크가 하나도 없는 작품에도 공유할 주소는 있다.
+  out.push(
+    `<button class="btn btn--ghost share-btn" type="button" data-share data-share-title="${esc(project.title)}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/></svg>
+        <span data-share-label>공유</span>
+        <span class="visually-hidden" role="status" data-share-status></span>
+      </button>`
+  );
   return out.join("\n");
 }
 

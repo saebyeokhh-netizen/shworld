@@ -6,9 +6,12 @@
 
 import { initTheme } from "./theme.js";
 import { initNav } from "./nav.js";
+import { initShare } from "./share.js";
 
 initTheme();
 initNav();
+// 공유 버튼은 바닥글에 있어 모든 페이지에 존재한다 — 페이지 분기 없이 붙인다.
+initShare();
 
 const page = document.body.dataset.page;
 
