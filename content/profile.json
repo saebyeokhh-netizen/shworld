@@ -17,7 +17,7 @@
   "skills": [
     {
       "category": "Frontend",
-      "items": ["JavaScript", "HTML", "CSS", "Vite"]
+      "items": ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Vite"]
     },
     {
       "category": "Backend / Edge",

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="스쿨킹의 카드 승패 관계를 나타낸 그림. 학주는 학생을, 학생은 학부모를, 학부모는 다시 학주를 이긴다.">
+  <defs>
+    <linearGradient id="felt" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#14453a"/>
+      <stop offset="1" stop-color="#082019"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.62">
+      <stop offset="0" stop-color="#1d6151" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#1d6151" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldCard" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#f6dda0"/>
+      <stop offset="0.5" stop-color="#e3bd6b"/>
+      <stop offset="1" stop-color="#cf9f3e"/>
+    </linearGradient>
+    <linearGradient id="blueCard" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#dbe6fa"/>
+      <stop offset="1" stop-color="#aec4ea"/>
+    </linearGradient>
+    <linearGradient id="roseCard" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#f6d8cd"/>
+      <stop offset="1" stop-color="#dda898"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-40%" y="-30%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M1 1 L11 6 L1 11 z" fill="#e8c877"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="540" rx="14" fill="url(#felt)"/>
+  <rect width="960" height="540" rx="14" fill="url(#glow)"/>
+
+  <text x="480" y="58" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="21" font-weight="600" fill="#e8c877" letter-spacing="1">카드 승패 관계</text>
+
+  <!-- 이김 화살표 (위) -->
+  <g fill="none" stroke="#e8c877" stroke-width="3" stroke-linecap="round" opacity="0.9">
+    <path d="M238 140 Q 350 92 462 140" marker-end="url(#arrow)"/>
+    <path d="M498 140 Q 610 92 722 140" marker-end="url(#arrow)"/>
+  </g>
+  <!-- 이김 화살표 (아래, 학부모 → 학주) -->
+  <g fill="none" stroke="#e8c877" stroke-width="3" stroke-linecap="round" opacity="0.9">
+    <path d="M744 372 C 730 462 250 462 236 372" marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="16" font-weight="600" fill="#e8c877" text-anchor="middle">
+    <text x="350" y="84">이김</text>
+    <text x="610" y="84">이김</text>
+    <text x="480" y="462">이김</text>
+  </g>
+
+  <!-- 학주 -->
+  <g filter="url(#cardShadow)">
+    <rect x="150" y="150" width="140" height="200" rx="14" fill="url(#goldCard)"/>
+  </g>
+  <g transform="translate(220 218)">
+    <path d="M-26 8 L-20 -14 L-8 -2 L0 -20 L8 -2 L20 -14 L26 8 z" fill="#5c410c" opacity="0.85"/>
+  </g>
+  <text x="220" y="278" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="27" font-weight="700" fill="#4a340a">학주</text>
+  <text x="220" y="312" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="15" fill="#6b4d15">1장</text>
+
+  <!-- 학생 -->
+  <g filter="url(#cardShadow)">
+    <rect x="410" y="150" width="140" height="200" rx="14" fill="url(#blueCard)"/>
+  </g>
+  <g transform="translate(480 218)" fill="#1f3a6b" opacity="0.85">
+    <path d="M-24 -14 h18 a4 4 0 0 1 4 4 v22 h-22 z"/>
+    <path d="M24 -14 h-18 a4 4 0 0 0 -4 4 v22 h22 z"/>
+  </g>
+  <text x="480" y="278" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="27" font-weight="700" fill="#1f3a6b">학생</text>
+  <text x="480" y="312" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="15" fill="#42598a">5장</text>
+
+  <!-- 학부모 -->
+  <g filter="url(#cardShadow)">
+    <rect x="670" y="150" width="140" height="200" rx="14" fill="url(#roseCard)"/>
+  </g>
+  <g transform="translate(740 216)" fill="#6b2f22" opacity="0.82">
+    <circle cx="-11" cy="-10" r="8"/>
+    <path d="M-25 12 a14 14 0 0 1 28 0 z"/>
+    <circle cx="13" cy="-4" r="6.5"/>
+    <path d="M2 14 a11 11 0 0 1 22 0 z"/>
+  </g>
+  <text x="740" y="278" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="27" font-weight="700" fill="#6b2f22">학부모</text>
+  <text x="740" y="312" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="15" fill="#8a4a38">2장</text>
+
+  <text x="480" y="508" text-anchor="middle" font-family="Malgun Gothic, Segoe UI, sans-serif" font-size="16" fill="#8fb3a6">숫자카드 52장 · 땡땡이 5장(항상 짐)</text>
+</svg>
