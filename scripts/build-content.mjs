@@ -509,7 +509,7 @@ async function loadProfile() {
   profile.skills = Array.isArray(profile.skills) ? profile.skills : [];
   profile.timeline = Array.isArray(profile.timeline) ? profile.timeline : [];
   profile.links = profile.links ?? {};
-  profile.siteUrl = String(profile.siteUrl ?? "https://shworld.dev").replace(/\/$/, "");
+  profile.siteUrl = String(profile.siteUrl ?? "https://shworld.cloud").replace(/\/$/, "");
   return profile;
 }
 

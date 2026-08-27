@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://shworld.dev/sitemap.xml
+Sitemap: https://shworld.cloud/sitemap.xml

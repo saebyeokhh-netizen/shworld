@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://wonderful.shworld.workers.dev/</loc></url>
-  <url><loc>https://wonderful.shworld.workers.dev/projects.html</loc></url>
-  <url><loc>https://wonderful.shworld.workers.dev/about.html</loc></url>
-  <url><loc>https://wonderful.shworld.workers.dev/guestbook.html</loc></url>
-  <url><loc>https://wonderful.shworld.workers.dev/contact.html</loc></url>
-  <url><loc>https://wonderful.shworld.workers.dev/projects/schoolking.html</loc><lastmod>2026-08-23</lastmod></url>
-  <url><loc>https://wonderful.shworld.workers.dev/projects/bbdd.html</loc><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://shworld.cloud/</loc></url>
+  <url><loc>https://shworld.cloud/projects.html</loc></url>
+  <url><loc>https://shworld.cloud/about.html</loc></url>
+  <url><loc>https://shworld.cloud/guestbook.html</loc></url>
+  <url><loc>https://shworld.cloud/contact.html</loc></url>
+  <url><loc>https://shworld.cloud/projects/schoolking.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://shworld.cloud/projects/bbdd.html</loc><lastmod>2026-08-20</lastmod></url>
 </urlset>
