@@ -474,6 +474,37 @@ body[data-page="contact"]   [data-nav="contact"] {
   font-size: var(--text-sm);
 }
 
+/*
+ * 카드에서 바로 써보는 링크.
+ *
+ * 목록은 "구경거리" 가 아니라 "입구" 다. 상세로 한 번 더 들어가야 데모에 닿으면
+ * 그 사이에서 대부분이 떨어져 나간다. 그래서 카드 안에 직접 두되, 제목보다
+ * 세지 않게 해서 카드 전체를 누르는 흐름은 그대로 둔다.
+ */
+.card__try {
+  margin-top: var(--space-2);
+}
+
+.card__try a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.card__try a:hover {
+  text-decoration: underline;
+}
+
+.card__try svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
 .card__foot {
   display: flex;
   align-items: center;

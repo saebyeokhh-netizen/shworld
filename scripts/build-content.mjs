@@ -352,6 +352,22 @@ function tagListHtml(tags, { link = false } = {}) {
   return `<ul class="tag-list">${items}</ul>`;
 }
 
+/**
+ * 카드에서 바로 써볼 수 있는 링크.
+ *
+ * 이 사이트는 만든 것을 보여주려고 있는 곳이라, 방문자가 목록에서 한 번 더 눌러
+ * 상세로 들어가야만 데모에 닿는 건 한 단계가 많다. 데모가 있으면 카드에서 바로 연다.
+ */
+function cardTryHtml(project) {
+  if (!project.links.demo) return "";
+  return `<p class="card__try">
+      <a href="${esc(project.links.demo)}" target="_blank" rel="noopener">
+        지금 해보기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M17 7H9M17 7v8"/></svg>
+      </a>
+    </p>`;
+}
+
 function projectCardHtml(project) {
   const href = `/projects/${project.slug}.html`;
   const haystack = [project.title, project.summary, ...project.tags, ...project.stack].join(" ");
@@ -369,6 +385,7 @@ function projectCardHtml(project) {
     <h3 class="card__title"><a href="${esc(href)}">${esc(project.title)}</a></h3>
     <p class="card__summary">${esc(project.summary)}</p>
     ${tagListHtml(project.tags)}
+    ${cardTryHtml(project)}
     <div class="card__foot">
       <time class="card__date" datetime="${esc(project.date)}">${esc(humanDate(project.date))}</time>
       <span class="views" data-views-for="${esc(project.slug)}" hidden>
@@ -670,6 +687,9 @@ async function writePartials(projects, profile) {
     "profile.emailHref": esc(`mailto:${profile.email}`),
     "profile.bio": bioHtml(profile.bio),
     "profile.bioFirst": esc(profile.bio[0] ?? ""),
+    // 첫 화면용 한 줄. 소개 페이지의 자기 이야기(bio)와 목적이 다르다 —
+    // 여기는 "무엇을 만들었고 지금 써볼 수 있다" 를 알리는 자리다
+    "profile.pitch": esc(profile.pitch ?? profile.bio[0] ?? ""),
     "profile.links": linksHtml(profile.links),
     "profile.skills": skillsHtml(profile.skills),
     "profile.skillsTop": skillsHtml(profile.skills.slice(0, 4)),
@@ -680,6 +700,9 @@ async function writePartials(projects, profile) {
     "projects.count": String(projects.length),
     "projects.tagCount": String(allTags.length),
     "stack.count": String(new Set(projects.flatMap((p) => p.stack)).size),
+    // 첫 화면 숫자는 방문자가 궁금해할 것만 센다. "사용 기술 12개" 는 이력서의 문법이지,
+    // 작품을 보러 온 사람에게는 아무 의미가 없다
+    "projects.playable": String(projects.filter((p) => p.links.demo).length),
     "site.url": esc(profile.siteUrl),
     "site.year": String(new Date().getFullYear()),
   };

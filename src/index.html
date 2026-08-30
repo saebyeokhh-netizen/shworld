@@ -60,7 +60,7 @@
             <span class="hero__name"><!--@profile.name--></span>
             <!--@profile.tagline-->
           </h1>
-          <p class="hero__lede"><!--@profile.bioFirst--></p>
+          <p class="hero__lede"><!--@profile.pitch--></p>
 
           <div class="hero__actions">
             <a class="btn btn--primary" href="/projects.html">
@@ -70,10 +70,14 @@
             <a class="btn btn--ghost" href="/contact.html">연락하기</a>
           </div>
 
+          <!--
+            방문자가 궁금해할 것만 센다. "사용 기술 12개 · 분야 태그 9개" 는 이력서 숫자라
+            작품을 보러 온 사람에게는 읽을 이유가 없었다.
+          -->
           <ul class="hero__meta">
             <li><strong><!--@projects.count--></strong> 공개한 작품</li>
-            <li><strong><!--@stack.count--></strong> 사용 기술</li>
-            <li><strong><!--@projects.tagCount--></strong> 분야 태그</li>
+            <li><strong><!--@projects.playable--></strong> 지금 바로 해볼 수 있음</li>
+            <li><strong>무료</strong> 설치도 가입도 없이</li>
           </ul>
         </div>
       </section>
@@ -85,7 +89,7 @@
             <div>
               <span class="eyebrow">Selected work</span>
               <h2>대표 작품</h2>
-              <p>직접 설계하고 끝까지 운영해 본 것들입니다. 무엇을 배웠는지까지 함께 적어두었습니다.</p>
+              <p>만들어서 실제로 쓰고 있는 것들입니다. 눌러보면 바로 열립니다.</p>
             </div>
             <a class="btn btn--ghost" href="/projects.html">전체 <!--@projects.count-->개 보기</a>
           </div>
