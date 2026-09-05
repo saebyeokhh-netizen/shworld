@@ -9,7 +9,7 @@ tags: [React, TypeScript, Cloudflare, 멀티플레이어, 게임, PWA]
 stack: [React 19, TypeScript, Vite, Zustand, React Router, Cloudflare Workers, Durable Objects, D1, Vitest]
 date: 2026-08-23
 featured: true
-thumbnail: /img/projects/schoolking.svg
+thumbnail: /img/projects/medusa-salon.png
 links:
   demo: https://shworld.cloud/m-hairsalon/
 ---
@@ -20,7 +20,7 @@ links:
 
 브라우저에서 바로 돌아가고, 폰에서 홈 화면에 추가하면 앱처럼 열립니다. 계정 없이 봇을 상대로 연습할 수 있고, 방을 만들어 나온 4자리 코드를 친구에게 보내면 실제 온라인 대전이 됩니다.
 
-![메두사 미용실의 카드 승패 관계 — 제우스는 헤라클레스를, 헤라클레스는 메두사를, 메두사는 다시 제우스를 이긴다](/img/projects/schoolking.svg)
+![메두사 미용실의 카드 승패 관계 — 제우스는 헤라클레스를, 헤라클레스는 메두사를, 메두사는 다시 제우스를 이긴다](/img/projects/medusa-salon.png)
 
 *위 그림은 실제 화면을 찍은 것이 아니라 카드 관계를 나타낸 것입니다.*
 
