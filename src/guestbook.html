@@ -21,6 +21,19 @@
       // 첫 페인트 전에 테마를 확정한다 (다크 모드 플래시 방지)
       (function () { try { var t = localStorage.getItem("shworld:theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
     </script>
+    <!--
+      애드센스. 게임과 같은 계정·같은 게시자 ID 를 쓴다 — 둘 다 shworld.cloud 라
+      애드센스에게는 같은 사이트 하나이고, 권한을 밝히는 ads.txt 도 도메인 맨 위
+      한 곳(shworld.cloud/ads.txt)이 둘을 함께 담당한다.
+
+      404 페이지에는 넣지 않는다. 내용이 없는 페이지에 광고를 띄우는 것은
+      애드센스 정책에 어긋난다.
+    -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8646263697877187"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="/styles/main.css" />
     <script type="module" src="/js/main.js"></script>
   </head>
