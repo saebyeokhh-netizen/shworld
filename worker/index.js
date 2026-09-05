@@ -22,6 +22,11 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    const moved = movedGamePath(url.pathname);
+    if (moved) {
+      return Response.redirect(new URL(moved + url.search, url.origin), 301);
+    }
+
     if (!url.pathname.startsWith("/api/")) {
       return env.ASSETS.fetch(request);
     }
@@ -35,6 +40,60 @@ export default {
     }
   },
 };
+
+/**
+ * 예전 게임 주소를 새 자리로 넘긴다.
+ *
+ * ── 왜 필요한가 ───────────────────────────────────────────────────────────
+ *  2026-09-05 에 게임(메두사 미용실)이 도메인 맨 위에서 `/m-hairsalon` 아래로 내려갔다.
+ *  그런데 **그 전에 만들어진 링크들은 그대로 남아 있다.**
+ *
+ *  - 홈 화면에 설치한 앱은 `start_url` 이 `/home` 이라 그리로 간다
+ *  - 카카오톡으로 보낸 방 링크(`/room/ABCD`)를 나중에 누르는 사람이 있다
+ *
+ *  넘겨주지 않으면 그 사람들은 404 를 본다. 앱을 다시 설치하라는 말을 일일이 할 수도 없다.
+ *
+ * ── 왜 목록을 적어 두나 ──────────────────────────────────────────────────
+ *  `/*` 를 통째로 넘길 수는 없다. 이 사이트도 자기 주소를 가지고 있어서
+ *  (`/about`, `/projects`, `/contact`, `/guestbook`) 겹치면 **이 사이트가 가려진다.**
+ *  특히 `/about` 은 양쪽 모두에 있다 — 여기서는 이 사이트 것이 이긴다.
+ *
+ *  그래서 **게임에만 있는 주소**를 적어 둔다. 게임에 새 화면이 생겨도 여기 없으면 그냥
+ *  404 다. 그것이 남의 주소를 가로채는 것보다 낫다.
+ *
+ *  301(영구)로 넘긴다. 검색엔진이 옛 주소의 평가를 새 주소로 옮겨 준다.
+ */
+const GAME_PATHS = new Set([
+  "/home",
+  "/login",
+  "/nickname",
+  "/lobby",
+  "/matching",
+  "/game",
+  "/shop",
+  "/apples",
+  "/records",
+  "/friends",
+  "/ranking",
+  "/settings",
+  "/tutorial",
+  "/practice",
+  "/guide",
+  "/privacy",
+]);
+
+/** 넘길 주소면 새 경로를, 아니면 null */
+function movedGamePath(pathname) {
+  const path = pathname.replace(/\/+$/, "") || "/";
+
+  if (GAME_PATHS.has(path)) return `/m-hairsalon${path}`;
+
+  // 방 링크 — 코드가 뒤에 붙는다. 로그인 콜백도 같은 모양이다
+  if (/^\/room\/[A-Za-z0-9_-]{1,32}$/.test(path)) return `/m-hairsalon${path}`;
+  if (path === "/auth/callback") return "/m-hairsalon/auth/callback";
+
+  return null;
+}
 
 async function routeApi(request, env, url) {
   if (!env.DB) return errors.notConfigured("D1 바인딩(DB)");
