@@ -368,6 +368,28 @@ function cardTryHtml(project) {
     </p>`;
 }
 
+/**
+ * 첫 화면 오른쪽에 세우는 대표 작품 한 점.
+ *
+ * 이 사이트는 작품을 보여주려고 있는 곳이라, 첫 화면이 글만으로 채워지면 정작
+ * 무엇을 만들었는지가 한 화면 아래로 밀린다. 대표작을 바로 옆에 세워 스크롤 전에
+ * 눈에 들어오게 한다. 그림이 없는 작품이면 아무것도 그리지 않는다 —
+ * 빈 액자를 세우느니 글만 두는 편이 낫다.
+ */
+function heroWorkHtml(project) {
+  if (!project || !thumbnailExists(project.thumbnail)) return "";
+  return `<a class="hero__work" href="/projects/${esc(project.slug)}.html">
+    <span class="hero__work-frame">
+      <img src="${esc(project.thumbnail)}" alt="" width="1024" height="576" decoding="async">
+    </span>
+    <span class="hero__work-meta">
+      <span class="hero__work-eyebrow">대표 작품</span>
+      <strong>${esc(project.title)}</strong>
+      <span class="hero__work-summary">${esc(project.summary)}</span>
+    </span>
+  </a>`;
+}
+
 function projectCardHtml(project) {
   const href = `/projects/${project.slug}.html`;
   const haystack = [project.title, project.summary, ...project.tags, ...project.stack].join(" ");
@@ -653,11 +675,29 @@ async function writeIndexJson(projects) {
   await writeFile(path.join(dir, "projects.json"), `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 }
 
+/*
+ * 같은 도메인에 얹혀 사는 다른 사이트의 주소.
+ *
+ * 게임(메두사 미용실)은 별도 저장소이고 Cloudflare 워커가 `/m-hairsalon` 아래로 보내준다.
+ * 저장소가 다르다고 크롤러가 알아서 찾아가지는 않으므로 여기서 함께 알려준다 — 게임 방법과
+ * 개인정보처리방침에 읽을 글이 9,000자쯤 있는데, 그 자리를 모르면 없는 글이 된다.
+ *
+ * 애드센스가 이 도메인을 "가치가 별로 없는 콘텐츠" 로 반려한 적이 있다(2026-09-05). 도메인
+ * 전체에 무엇이 있는지 빠짐없이 알리는 편이 낫다.
+ */
+const EXTERNAL_PAGES = [
+  "/m-hairsalon/",
+  "/m-hairsalon/guide",
+  "/m-hairsalon/about",
+  "/m-hairsalon/privacy",
+];
+
 async function writeSitemap(projects, profile) {
   const pages = ["/", "/projects.html", "/about.html", "/guestbook.html", "/contact.html"];
   const urls = [
     ...pages.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
     ...projects.map((p) => ({ loc: `${profile.siteUrl}/projects/${p.slug}.html`, lastmod: p.date })),
+    ...EXTERNAL_PAGES.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
   ];
 
   const body = urls
@@ -695,6 +735,7 @@ async function writePartials(projects, profile) {
     "profile.skillsTop": skillsHtml(profile.skills.slice(0, 4)),
     "profile.timeline": timelineHtml(profile.timeline),
     "projects.featured": heroFeatured.map(projectCardHtml).join("\n") || emptyProjectsHtml(),
+    "projects.hero": heroWorkHtml(heroFeatured[0]),
     "projects.all": projects.map(projectCardHtml).join("\n") || emptyProjectsHtml(),
     "projects.tagChips": tagChipsHtml(allTags),
     "projects.count": String(projects.length),
