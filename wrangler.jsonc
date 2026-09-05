@@ -26,6 +26,22 @@
     "run_worker_first": ["/api/*"]
   },
 
+  /*
+   * 도메인 맨 위를 이 워커가 맡는다.
+   *
+   * 게임(메두사 미용실)이 여기 있었는데, 애드센스가 "가치가 별로 없는 콘텐츠" 로 사이트를
+   * 반려했다. 게임 앱은 심사 로봇 눈에 글이 하나도 없는 백지로 보이기 때문이다. 그래서
+   * 맨 위는 읽을거리가 있는 이 사이트가 맡고, 게임은 `/m-hairsalon` 아래로 내려간다.
+   *
+   * ⚠️ 게임 경로는 더 구체적인 라우트(`m-hairsalon-proxy` 워커)가 가져간다. Cloudflare 는
+   *    겹치는 라우트 중 **더 구체적인 쪽**을 고르므로, 이 `/*` 가 게임을 가리지 않는다.
+   *    다만 그 워커가 먼저 배포돼 있어야 한다 — 순서가 바뀌면 게임이 잠깐 안 열린다.
+   */
+  "routes": [
+    { "pattern": "shworld.cloud/*", "zone_name": "shworld.cloud" },
+    { "pattern": "www.shworld.cloud/*", "zone_name": "shworld.cloud" }
+  ],
+
   "d1_databases": [
     {
       "binding": "DB",
