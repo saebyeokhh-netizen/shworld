@@ -606,7 +606,10 @@ async function writeDetailPages(projects, profile) {
     const next = projects[index - 1] ?? null;
 
     const bodyHtml = renderMarkdown(project.body);
-    const canonical = `${profile.siteUrl}/projects/${project.slug}.html`;
+    // 확장자를 뺀 주소가 이 글의 정식 주소다. `.html` 로 열면 자산 레이어가
+    // 확장자 없는 쪽으로 넘겨주므로, 정식 주소를 `.html` 로 적으면 정식 주소가
+    // 곧바로 다른 주소로 넘어가는 셈이 된다. 검색엔진은 그런 지목을 믿지 않는다.
+    const canonical = `${profile.siteUrl}/projects/${project.slug}`;
     const description = project.summary.slice(0, 180);
 
     const meta = [
@@ -693,10 +696,13 @@ const EXTERNAL_PAGES = [
 ];
 
 async function writeSitemap(projects, profile) {
-  const pages = ["/", "/projects.html", "/about.html", "/guestbook.html", "/contact.html"];
+  // 넘어가는 주소가 아니라 넘어간 뒤의 주소를 적는다. 사이트맵은 '여기를 거둬
+  // 가라'고 내미는 목록인데, 거기 적힌 것이 죄다 다른 주소로 넘어가면 크롤러는
+  // 같은 걸음을 두 번씩 걷게 되고 정식 주소도 흐려진다.
+  const pages = ["/", "/projects", "/about", "/guestbook", "/contact"];
   const urls = [
     ...pages.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
-    ...projects.map((p) => ({ loc: `${profile.siteUrl}/projects/${p.slug}.html`, lastmod: p.date })),
+    ...projects.map((p) => ({ loc: `${profile.siteUrl}/projects/${p.slug}`, lastmod: p.date })),
     ...EXTERNAL_PAGES.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
   ];
 

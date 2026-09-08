@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://shworld.cloud/</loc></url>
-  <url><loc>https://shworld.cloud/projects.html</loc></url>
-  <url><loc>https://shworld.cloud/about.html</loc></url>
-  <url><loc>https://shworld.cloud/guestbook.html</loc></url>
-  <url><loc>https://shworld.cloud/contact.html</loc></url>
-  <url><loc>https://shworld.cloud/projects/bbdd.html</loc><lastmod>2026-09-07</lastmod></url>
-  <url><loc>https://shworld.cloud/projects/crabrace.html</loc><lastmod>2026-09-06</lastmod></url>
-  <url><loc>https://shworld.cloud/projects/schoolking.html</loc><lastmod>2026-08-23</lastmod></url>
+  <url><loc>https://shworld.cloud/projects</loc></url>
+  <url><loc>https://shworld.cloud/about</loc></url>
+  <url><loc>https://shworld.cloud/guestbook</loc></url>
+  <url><loc>https://shworld.cloud/contact</loc></url>
+  <url><loc>https://shworld.cloud/projects/bbdd</loc><lastmod>2026-09-07</lastmod></url>
+  <url><loc>https://shworld.cloud/projects/crabrace</loc><lastmod>2026-09-06</lastmod></url>
+  <url><loc>https://shworld.cloud/projects/schoolking</loc><lastmod>2026-08-23</lastmod></url>
   <url><loc>https://shworld.cloud/m-hairsalon/</loc></url>
   <url><loc>https://shworld.cloud/m-hairsalon/guide</loc></url>
   <url><loc>https://shworld.cloud/m-hairsalon/about</loc></url>
