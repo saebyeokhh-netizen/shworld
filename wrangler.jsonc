@@ -50,7 +50,6 @@
       "/tutorial",
       "/practice",
       "/guide",
-      "/privacy",
       "/room/*",
       "/auth/callback"
     ]

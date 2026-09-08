@@ -79,7 +79,9 @@ const GAME_PATHS = new Set([
   "/tutorial",
   "/practice",
   "/guide",
-  "/privacy",
+  // "/privacy" 는 뺐다. 이 사이트가 자기 방침 문서를 갖게 됐다. 위에 적어 둔
+  // 원칙 그대로다 — 양쪽에 다 있는 주소는 이 사이트 것이 이긴다. 게임 방침은
+  // /m-hairsalon/privacy 에 그대로 있고, 이 사이트의 방침 문서가 그리로 안내한다.
 ]);
 
 /** 넘길 주소면 새 경로를, 아니면 null */
