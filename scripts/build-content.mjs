@@ -378,7 +378,7 @@ function cardTryHtml(project) {
  */
 function heroWorkHtml(project) {
   if (!project || !thumbnailExists(project.thumbnail)) return "";
-  return `<a class="hero__work" href="/projects/${esc(project.slug)}.html">
+  return `<a class="hero__work" href="/projects/${esc(project.slug)}">
     <span class="hero__work-frame">
       <img src="${esc(project.thumbnail)}" alt="" width="1024" height="576" decoding="async">
     </span>
@@ -391,7 +391,7 @@ function heroWorkHtml(project) {
 }
 
 function projectCardHtml(project) {
-  const href = `/projects/${project.slug}.html`;
+  const href = `/projects/${project.slug}`;
   const haystack = [project.title, project.summary, ...project.tags, ...project.stack].join(" ");
 
   const thumb = thumbnailExists(project.thumbnail)
@@ -503,7 +503,7 @@ function projectLinkButtons(project) {
 function pagerHtml(prev, next) {
   const parts = [];
   if (prev) {
-    parts.push(`<a href="/projects/${esc(prev.slug)}.html" data-dir="prev" rel="prev">
+    parts.push(`<a href="/projects/${esc(prev.slug)}" data-dir="prev" rel="prev">
   <span class="pager__label">이전 작품</span>
   <span class="pager__title">${esc(prev.title)}</span>
 </a>`);
@@ -511,7 +511,7 @@ function pagerHtml(prev, next) {
     parts.push(`<span></span>`);
   }
   if (next) {
-    parts.push(`<a href="/projects/${esc(next.slug)}.html" data-dir="next" rel="next">
+    parts.push(`<a href="/projects/${esc(next.slug)}" data-dir="next" rel="next">
   <span class="pager__label">다음 작품</span>
   <span class="pager__title">${esc(next.title)}</span>
 </a>`);
@@ -668,7 +668,7 @@ async function writeIndexJson(projects) {
       stack: p.stack,
       date: p.date,
       featured: p.featured,
-      url: `/projects/${p.slug}.html`,
+      url: `/projects/${p.slug}`,
       links: p.links,
       // 검색용 발췌 — 본문 앞부분 텍스트만
       excerpt: stripTags(renderMarkdown(p.body)).slice(0, 400),
