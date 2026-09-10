@@ -694,6 +694,8 @@ async function writeIndexJson(projects) {
 const EXTERNAL_PAGES = [
   "/m-hairsalon/",
   "/m-hairsalon/guide",
+  // 규칙이 아니라 판단을 적은 글. 반려 사유가 "읽을 글이 없다" 였으므로 특히 빠뜨리면 안 된다
+  "/m-hairsalon/tips",
   "/m-hairsalon/about",
   "/m-hairsalon/privacy",
 ];
