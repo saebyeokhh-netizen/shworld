@@ -107,6 +107,17 @@
             </div>
           </form>
 
+          <!--
+            개인정보 문의는 이 양식이 아니라 별도 창구로 보낸다. 지우거나 고쳐 달라는
+            요청은 놓치면 안 되는 종류인데, 이 양식은 받은 내용을 데이터베이스에 담아
+            둘 뿐이라 알림이 없다. 그쪽은 새 글이 오면 메일이 온다.
+          -->
+          <p class="field__hint" style="margin-top: var(--space-6)">
+            남기신 방명록이나 연락 내용을 <strong>확인·수정·삭제</strong>하고 싶으시면
+            <a href="<!--@profile.privacyFormUrl-->" target="_blank" rel="noopener">개인정보 문의</a>로
+            보내 주세요. 처리 방식은 <a href="/privacy">개인정보처리방침</a>에 적어 두었습니다.
+          </p>
+
           <ul class="link-list" style="margin-top: var(--space-6)">
             <!--@profile.links-->
           </ul>

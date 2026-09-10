@@ -549,6 +549,9 @@ async function loadProfile() {
   profile.timeline = Array.isArray(profile.timeline) ? profile.timeline : [];
   profile.links = profile.links ?? {};
   profile.siteUrl = String(profile.siteUrl ?? "https://shworld.cloud").replace(/\/$/, "");
+  // 개인정보 문의를 받는 구글 폼. 사이트가 이메일 주소를 드러내지 않고도
+  // 연락을 받을 수 있는 창구다. 없으면 방침 문서가 연락 페이지로 안내한다.
+  profile.privacyFormUrl = String(profile.privacyFormUrl ?? "").trim();
   return profile;
 }
 
@@ -731,6 +734,7 @@ async function writePartials(projects, profile) {
     "profile.location": esc(profile.location ?? ""),
     "profile.email": esc(profile.email),
     "profile.emailHref": esc(`mailto:${profile.email}`),
+    "profile.privacyFormUrl": esc(profile.privacyFormUrl || "/contact"),
     "profile.bio": bioHtml(profile.bio),
     "profile.bioFirst": esc(profile.bio[0] ?? ""),
     // 첫 화면용 한 줄. 소개 페이지의 자기 이야기(bio)와 목적이 다르다 —

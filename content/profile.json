@@ -12,25 +12,41 @@
   "location": "Korea",
   "email": "saebyeokhh@gmail.com",
   "siteUrl": "https://shworld.cloud",
+  "privacyFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdlK4uVXWQRSK6iZ2dvDjxumBBQ-6KkA2xwmoWHb2vfIx7MuA/viewform",
   "links": {
     "github": "https://github.com/saebyeokhh-netizen"
   },
   "skills": [
     {
       "category": "Frontend",
-      "items": ["JavaScript", "TypeScript", "React", "HTML", "CSS", "Vite"]
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "HTML",
+        "CSS",
+        "Vite"
+      ]
     },
     {
       "category": "Backend / Edge",
-      "items": ["Cloudflare Workers", "REST API"]
+      "items": [
+        "Cloudflare Workers",
+        "REST API"
+      ]
     },
     {
       "category": "Data",
-      "items": ["Cloudflare D1 / SQLite"]
+      "items": [
+        "Cloudflare D1 / SQLite"
+      ]
     },
     {
       "category": "Infra / Tooling",
-      "items": ["Git", "Wrangler"]
+      "items": [
+        "Git",
+        "Wrangler"
+      ]
     }
   ],
   "timeline": [
