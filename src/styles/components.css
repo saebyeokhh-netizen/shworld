@@ -135,18 +135,6 @@
   list-style: none;
 }
 
-/*
- * 개인정보처리방침처럼 "필요할 때 찾아가는" 항목.
- *
- * 메뉴에서 빼면 폰에서는 찾을 길이 바닥글까지 스크롤하는 것뿐이라 넣되,
- * 작품·소개와 같은 무게로 보이면 메뉴의 우선순위가 흐려진다. 한 단계 여리게 둔다.
- */
-.site-nav__list a.site-nav__quiet {
-  color: var(--ink-muted);
-  font-size: var(--text-xs);
-  font-weight: 500;
-}
-
 .site-nav__list a {
   display: block;
   padding: var(--space-2) var(--space-3);
