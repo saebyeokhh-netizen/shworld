@@ -697,7 +697,8 @@ const EXTERNAL_PAGES = [
   // 규칙이 아니라 판단을 적은 글. 반려 사유가 "읽을 글이 없다" 였으므로 특히 빠뜨리면 안 된다
   "/m-hairsalon/tips",
   "/m-hairsalon/about",
-  "/m-hairsalon/privacy",
+  // "/m-hairsalon/privacy" 는 뺐다 — 방침은 이 사이트의 /privacy 한 곳으로 옮겼고
+  //  그 주소는 새 자리로 넘겨준다. 사이트맵에 넘어가는 주소를 넣으면 크롤러가 헛걸음한다.
 ];
 
 async function writeSitemap(projects, profile) {
