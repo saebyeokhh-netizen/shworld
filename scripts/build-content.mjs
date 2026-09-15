@@ -410,9 +410,14 @@ function projectCardHtml(project) {
     ${cardTryHtml(project)}
     <div class="card__foot">
       <time class="card__date" datetime="${esc(project.date)}">${esc(humanDate(project.date))}</time>
+      <!--
+        숫자를 비워 둔다. 여기 "0" 을 적어 두면 화면에는 안 보여도(hidden) **HTML 을 읽는
+        크롤러에게는 "0 회 조회" 라는 글자로 보인다.** 작품마다 그것이 붙으면 사이트가
+        비어 있다는 인상을 준다. 조회수는 0 보다 클 때만 JS 가 채우고 보여준다(views.js).
+      -->
       <span class="views" data-views-for="${esc(project.slug)}" hidden>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-        <span data-views-value>0</span><span class="visually-hidden"> 회 조회</span>
+        <span data-views-value></span><span class="visually-hidden"> 회 조회</span>
       </span>
     </div>
   </div>

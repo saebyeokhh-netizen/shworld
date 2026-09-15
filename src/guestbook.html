@@ -22,18 +22,16 @@
       (function () { try { var t = localStorage.getItem("shworld:theme"); if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); } catch (e) {} })();
     </script>
     <!--
-      애드센스. 게임과 같은 계정·같은 게시자 ID 를 쓴다 — 둘 다 shworld.cloud 라
-      애드센스에게는 같은 사이트 하나이고, 권한을 밝히는 ads.txt 도 도메인 맨 위
-      한 곳(shworld.cloud/ads.txt)이 둘을 함께 담당한다.
+      ⚠️ 이 페이지에는 애드센스 코드를 넣지 않는다.
 
-      404 페이지에는 넣지 않는다. 내용이 없는 페이지에 광고를 띄우는 것은
-      애드센스 정책에 어긋난다.
+      애드센스 게시자 정책은 "게시자 콘텐츠가 없는 화면" — 알림·탐색·행동 목적 화면 — 에
+      광고를 싣는 것을 금지한다. 이 페이지는 **폼 하나가 전부**라 읽을거리가 없다.
+
+      2026-09-05 에 받은 1차 반려 사유가 바로 그것이었고(게임 앱의 모든 화면에 광고 코드가
+      따라다녔다), 2차 반려(09-16)에서는 사라졌지만 여기 남아 있으면 다시 지적될 수 있다.
+
+      읽을거리가 생기면 그때 넣는다.
     -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8646263697877187"
-      crossorigin="anonymous"
-    ></script>
     <link rel="stylesheet" href="/styles/main.css" />
     <script type="module" src="/js/main.js"></script>
   </head>
@@ -126,7 +124,7 @@
 
           <div class="empty-state" id="entry-offline" hidden>
             <h3>목록을 불러올 수 없습니다</h3>
-            <p>API 서버에 연결하지 못했습니다. <code>npm run cf:dev</code> 로 Worker 를 함께 띄우면 방명록이 동작합니다.</p>
+            <p>잠시 뒤 다시 시도해 주세요.</p>
           </div>
 
           <div class="form__foot" style="margin-top: var(--space-5)">
