@@ -25,6 +25,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIR = {
   content: path.join(ROOT, "content"),
   projects: path.join(ROOT, "content", "projects"),
+  posts: path.join(ROOT, "content", "posts"),
   templates: path.join(ROOT, "src", "templates"),
   generated: path.join(ROOT, "src", "generated"),
   public: path.join(ROOT, "public"),
@@ -706,15 +707,16 @@ const EXTERNAL_PAGES = [
   //  그 주소는 새 자리로 넘겨준다. 사이트맵에 넘어가는 주소를 넣으면 크롤러가 헛걸음한다.
 ];
 
-async function writeSitemap(projects, profile) {
+async function writeSitemap(projects, profile, posts) {
   // 넘어가는 주소가 아니라 넘어간 뒤의 주소를 적는다. 사이트맵은 '여기를 거둬
   // 가라'고 내미는 목록인데, 거기 적힌 것이 죄다 다른 주소로 넘어가면 크롤러는
   // 같은 걸음을 두 번씩 걷게 되고 정식 주소도 흐려진다.
-  const pages = ["/", "/projects", "/about", "/guestbook", "/contact", "/privacy"];
+  const pages = ["/", "/projects", "/blog", "/about", "/guestbook", "/contact", "/privacy"];
   const urls = [
     ...pages.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
     ...projects.map((p) => ({ loc: `${profile.siteUrl}/projects/${p.slug}`, lastmod: p.date })),
     ...EXTERNAL_PAGES.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
+    ...posts.map((p) => ({ loc: `${profile.siteUrl}/blog/${p.slug}`, lastmod: p.date })),
   ];
 
   const body = urls
@@ -730,7 +732,166 @@ async function writeSitemap(projects, profile) {
   );
 }
 
-async function writePartials(projects, profile) {
+// ---------------------------------------------------------------------------
+// 글 (개발 기록)
+//
+// ── 왜 붙였나 ───────────────────────────────────────────────────────────────
+//  2026-09-16, 애드센스가 이 도메인을 "가치가 별로 없는 콘텐츠" 로 두 번째 반려했다.
+//  기술 문제(빈 껍데기·noindex)는 앞서 고쳤으니 남은 것은 **읽을 것이 적다**는 판정이다.
+//
+//  그런데 읽을 것은 이미 쓰여 있었다. 게임을 만들며 남긴 개발일지가 저장소에 150편 넘게
+//  잠들어 있다. 구글이 요구하는 "직접 경험에서 나온 고유한 내용" 이 바로 그것이다.
+//
+// ── 작품(projects)과 무엇이 다른가 ──────────────────────────────────────────
+//  작품은 **무엇을 만들었나**, 글은 **만들면서 무엇을 겪었나** 다. 그래서 글에는 링크 버튼도
+//  썸네일도 없고, 대신 **시리즈**로 묶인다. 한 편만 읽고 끝나는 것이 아니라 이어 읽게 된다.
+// ---------------------------------------------------------------------------
+
+function validatePost(data, body, file) {
+  for (const field of ["title", "slug", "summary", "date"]) {
+    if (!data[field]) throw new ContentError(file, `'${field}' 가 없습니다.`);
+  }
+  if (!SLUG_RE.test(String(data.slug))) {
+    throw new ContentError(file, `slug '${data.slug}' 는 영소문자·숫자·붙임표만 쓸 수 있습니다.`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(data.date))) {
+    throw new ContentError(file, `date '${data.date}' 는 YYYY-MM-DD 여야 합니다.`);
+  }
+  if (!body.trim()) throw new ContentError(file, "본문이 비어 있습니다.");
+
+  return {
+    title: String(data.title),
+    slug: String(data.slug),
+    summary: String(data.summary),
+    date: String(data.date),
+    series: data.series ? String(data.series) : "",
+    tags: asStringArray(data.tags ?? [], "tags", file),
+    body,
+  };
+}
+
+async function loadPosts() {
+  let files;
+  try {
+    files = (await readdir(DIR.posts)).filter((f) => f.endsWith(".md")).sort();
+  } catch {
+    // 글이 하나도 없어도 빌드는 통과시킨다 — 파이프라인을 먼저 놓고 글은 뒤에 채운다
+    return [];
+  }
+
+  const posts = [];
+  const seen = new Map();
+  for (const name of files) {
+    const file = path.join("content", "posts", name);
+    const raw = await readFile(path.join(DIR.posts, name), "utf8");
+    const { frontmatter, body } = splitFrontmatter(raw, file);
+    const post = validatePost(parseFrontmatter(frontmatter, file), body, file);
+    if (seen.has(post.slug)) {
+      throw new ContentError(file, `slug '${post.slug}' 가 중복됩니다 (${seen.get(post.slug)}).`);
+    }
+    seen.set(post.slug, file);
+    posts.push(post);
+  }
+  posts.sort((a, b) => (a.date === b.date ? a.title.localeCompare(b.title, "ko") : b.date.localeCompare(a.date)));
+  return posts;
+}
+
+/** 글 한 편의 카드 (목록용) */
+function postCardHtml(post) {
+  const series = post.series
+    ? `<span class="card__series">${esc(post.series)}</span>`
+    : "";
+  return `<li class="card card--post">
+  <div class="card__body">
+    ${series}
+    <h3 class="card__title"><a href="/blog/${esc(post.slug)}">${esc(post.title)}</a></h3>
+    <p class="card__summary">${esc(post.summary)}</p>
+    ${tagListHtml(post.tags)}
+    <div class="card__foot">
+      <time class="card__date" datetime="${esc(post.date)}">${esc(humanDate(post.date))}</time>
+    </div>
+  </div>
+</li>`;
+}
+
+/**
+ * 글을 시리즈별로 묶어 보여준다.
+ *
+ * 날짜순 한 줄로만 늘어놓으면 150편이 쌓였을 때 **아무도 두 번째 글에 닿지 못한다.**
+ * 시리즈로 묶으면 "실시간 방 서버" 를 궁금해하는 사람이 그 묶음만 이어 읽는다.
+ */
+function postsBySeriesHtml(posts) {
+  if (posts.length === 0) return `<p class="empty-state">아직 올린 글이 없습니다.</p>`;
+
+  const order = [];
+  const groups = new Map();
+  for (const post of posts) {
+    const key = post.series || "그 밖의 기록";
+    if (!groups.has(key)) {
+      groups.set(key, []);
+      order.push(key);
+    }
+    groups.get(key).push(post);
+  }
+
+  return order
+    .map((key) => {
+      const items = groups.get(key).map(postCardHtml).join("\n");
+      return `<section class="series">
+  <h2 class="series__name">${esc(key)}</h2>
+  <ul class="card-grid">
+${items}
+  </ul>
+</section>`;
+    })
+    .join("\n");
+}
+
+async function writePostPages(posts, profile) {
+  if (posts.length === 0) return;
+
+  const templatePath = path.join(DIR.templates, "post.html");
+  let template;
+  try {
+    template = await readFile(templatePath, "utf8");
+  } catch {
+    throw new Error(`글 템플릿이 없습니다: ${templatePath}`);
+  }
+
+  const outDir = path.join(DIR.generated, "posts");
+  await mkdir(outDir, { recursive: true });
+
+  for (const [index, post] of posts.entries()) {
+    // 목록이 최신순이므로 뒤쪽이 '이전 글'
+    const prev = posts[index + 1] ?? null;
+    const next = posts[index - 1] ?? null;
+    const pager = [
+      prev ? `<a class="pager__link" href="/blog/${esc(prev.slug)}">← ${esc(prev.title)}</a>` : `<span></span>`,
+      next ? `<a class="pager__link pager__link--next" href="/blog/${esc(next.slug)}">${esc(next.title)} →</a>` : `<span></span>`,
+    ].join("\n        ");
+
+    const html = fill(
+      template,
+      {
+        title: esc(post.title),
+        siteName: esc(profile.name),
+        description: esc(post.summary.slice(0, 180)),
+        canonical: esc(`${profile.siteUrl}/blog/${post.slug}`),
+        date: esc(post.date),
+        dateHuman: esc(humanDate(post.date)),
+        series: post.series ? `<span class="post__series">${esc(post.series)}</span>` : "",
+        summary: esc(post.summary),
+        tags: tagListHtml(post.tags),
+        body: renderMarkdown(post.body),
+        pager,
+      },
+      `src/templates/post.html → ${post.slug}`
+    );
+    await writeFile(path.join(outDir, `${post.slug}.html`), html, "utf8");
+  }
+}
+
+async function writePartials(projects, profile, posts) {
   const allTags = [...new Set(projects.flatMap((p) => p.tags))].sort((a, b) => a.localeCompare(b, "ko"));
   const featured = projects.filter((p) => p.featured);
   const heroFeatured = (featured.length > 0 ? featured : projects).slice(0, 3);
@@ -762,6 +923,9 @@ async function writePartials(projects, profile) {
     // 첫 화면 숫자는 방문자가 궁금해할 것만 센다. "사용 기술 12개" 는 이력서의 문법이지,
     // 작품을 보러 온 사람에게는 아무 의미가 없다
     "projects.playable": String(projects.filter((p) => p.links.demo).length),
+    "posts.bySeries": postsBySeriesHtml(posts),
+    "posts.count": String(posts.length),
+    "posts.latest": posts.slice(0, 3).map(postCardHtml).join(""),
     "site.url": esc(profile.siteUrl),
     "site.year": String(new Date().getFullYear()),
   };
@@ -776,18 +940,21 @@ async function main() {
 
   // 이전 산출물 제거 — 삭제된 작품의 HTML 이 dist 에 남지 않게 한다.
   await rm(path.join(DIR.generated, "projects"), { recursive: true, force: true });
+  await rm(path.join(DIR.generated, "posts"), { recursive: true, force: true });
 
   const profile = await loadProfile();
   const projects = await loadProjects();
+  const posts = await loadPosts();
 
   await writeDetailPages(projects, profile);
+  await writePostPages(posts, profile);
   await writeIndexJson(projects);
-  await writeSitemap(projects, profile);
-  await writePartials(projects, profile);
+  await writeSitemap(projects, profile, posts);
+  await writePartials(projects, profile, posts);
 
   const tagCount = new Set(projects.flatMap((p) => p.tags)).size;
   console.log(
-    `[content] 작품 ${projects.length}개 / 태그 ${tagCount}개 → src/generated, public/data (${Date.now() - started}ms)`
+    `[content] 작품 ${projects.length}개 / 글 ${posts.length}편 / 태그 ${tagCount}개 → src/generated, public/data (${Date.now() - started}ms)`
   );
   for (const p of projects) {
     console.log(`  · ${p.slug}${p.featured ? " (featured)" : ""} — ${p.title}`);

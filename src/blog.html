@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>소개 — shworld</title>
-    <meta name="description" content="어떤 개발자인지, 무엇을 다루는지, 어떤 순서로 배워왔는지." />
-    <link rel="canonical" href="<!--@site.url-->/about" />
-    <meta property="og:type" content="profile" />
+    <title>기록 — shworld</title>
+    <meta name="description" content="게임을 만들며 남긴 기록. 규칙을 고친 이유, 서버에서 겪은 문제, 애드센스와 법을 알아본 과정." />
+    <link rel="canonical" href="<!--@site.url-->/blog" />
+    <meta property="og:type" content="website" />
     <meta property="og:site_name" content="shworld" />
-    <meta property="og:title" content="소개 — shworld" />
-    <meta property="og:description" content="어떤 개발자인지, 무엇을 다루는지, 어떤 순서로 배워왔는지." />
-    <meta property="og:url" content="<!--@site.url-->/about" />
+    <meta property="og:title" content="기록 — shworld" />
+    <meta property="og:description" content="게임을 만들며 남긴 기록." />
+    <meta property="og:url" content="<!--@site.url-->/blog" />
     <meta property="og:locale" content="ko_KR" />
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
@@ -37,7 +37,7 @@
     <script type="module" src="/js/main.js"></script>
   </head>
 
-  <body data-page="about">
+  <body data-page="blog">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 
     <header class="site-header">
@@ -67,70 +67,20 @@
 
     <main class="site-main" id="main">
       <div class="page-head">
-        <div class="wrap">
-          <span class="eyebrow"><!--@profile.role--> · <!--@profile.location--></span>
-          <h1><!--@profile.name--></h1>
-          <p class="lede"><!--@profile.tagline--></p>
+        <div class="wrap wrap--narrow">
+          <span class="eyebrow">Notes</span>
+          <h1>기록</h1>
+          <p class="lede">
+            게임을 만들면서 남긴 글 <!--@posts.count-->편입니다. 무엇을 만들었는지가 아니라
+            <b>만들면서 무엇을 겪었는지</b>를 적었습니다. 규칙을 왜 고쳤는지, 서버에서 무엇이
+            어긋났는지, 광고와 법을 알아보며 알게 된 것들입니다.
+          </p>
         </div>
       </div>
 
-      <!-- 소개 -->
-      <section class="section">
-        <div class="wrap">
-          <article class="prose">
-            <!--@profile.bio-->
-          </article>
-
-          <ul class="link-list" style="margin-top: var(--space-6)">
-            <!--@profile.links-->
-          </ul>
-        </div>
-      </section>
-
-      <!-- 기술 -->
-      <section class="section section--alt">
-        <div class="wrap">
-          <div class="section__head">
-            <div>
-              <span class="eyebrow">Skills</span>
-              <h2>다루는 기술</h2>
-              <p>업무나 개인 프로젝트에서 실제로 배포까지 해 본 것들만 적었습니다.</p>
-            </div>
-          </div>
-
-          <ul class="skill-groups">
-            <!--@profile.skills-->
-          </ul>
-        </div>
-      </section>
-
-      <!-- 타임라인 -->
       <section class="section">
         <div class="wrap wrap--narrow">
-          <div class="section__head">
-            <div>
-              <span class="eyebrow">Timeline</span>
-              <h2>지나온 길</h2>
-            </div>
-          </div>
-
-          <ol class="timeline">
-            <!--@profile.timeline-->
-          </ol>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <section class="section section--tight">
-        <div class="wrap wrap--narrow">
-          <div class="cta">
-            <h2>작품을 더 보고 싶다면</h2>
-            <p>각 작품마다 무엇을 만들었고 무엇이 어려웠는지 정리해 두었습니다.</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary" href="/projects">작품 <!--@projects.count-->개 보기</a>
-              <a class="btn btn--ghost" href="/contact">연락하기</a>
-            </div>
-          </div>
+          <!--@posts.bySeries-->
         </div>
       </section>
     </main>

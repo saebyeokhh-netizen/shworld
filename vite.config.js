@@ -97,13 +97,15 @@ function flattenGeneratedOutput() {
     name: "shworld-flatten-generated",
     closeBundle() {
       const outDir = path.join(ROOT, "dist");
-      const from = path.join(outDir, "generated", "projects");
-      const to = path.join(outDir, "projects");
-      if (!existsSync(from)) return;
-
-      mkdirSync(to, { recursive: true });
-      for (const file of readdirSync(from)) {
-        renameSync(path.join(from, file), path.join(to, file));
+      // generated/projects → dist/projects, generated/posts → dist/blog
+      for (const [src, dest] of [["projects", "projects"], ["posts", "blog"]]) {
+        const from = path.join(outDir, "generated", src);
+        const to = path.join(outDir, dest);
+        if (!existsSync(from)) continue;
+        mkdirSync(to, { recursive: true });
+        for (const file of readdirSync(from)) {
+          renameSync(path.join(from, file), path.join(to, file));
+        }
       }
       rmSync(path.join(outDir, "generated"), { recursive: true, force: true });
     },

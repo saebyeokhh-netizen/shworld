@@ -1,18 +1,26 @@
 <!doctype html>
 <html lang="ko">
   <head>
+    <!--
+      글(개발 기록) 페이지 템플릿.
+      Vite 엔트리가 아니다 — scripts/build-content.mjs 가 이 파일의 자리표시자를 채워
+      src/generated/posts/<slug>.html 을 만들고, 그 결과물이 엔트리가 된다.
+      빌드가 끝나면 vite.config.js 가 dist/blog/<slug>.html 로 옮긴다.
+    -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>소개 — shworld</title>
-    <meta name="description" content="어떤 개발자인지, 무엇을 다루는지, 어떤 순서로 배워왔는지." />
-    <link rel="canonical" href="<!--@site.url-->/about" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:site_name" content="shworld" />
-    <meta property="og:title" content="소개 — shworld" />
-    <meta property="og:description" content="어떤 개발자인지, 무엇을 다루는지, 어떤 순서로 배워왔는지." />
-    <meta property="og:url" content="<!--@site.url-->/about" />
+    <title>{{title}} — {{siteName}}</title>
+    <meta name="description" content="{{description}}" />
+    <link rel="canonical" href="{{canonical}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="{{siteName}}" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{canonical}}" />
     <meta property="og:locale" content="ko_KR" />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{title}}" />
+    <meta name="twitter:description" content="{{description}}" />
     <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0d0f13" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -37,7 +45,7 @@
     <script type="module" src="/js/main.js"></script>
   </head>
 
-  <body data-page="about">
+  <body data-page="project">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 
     <header class="site-header">
@@ -66,73 +74,36 @@
     </header>
 
     <main class="site-main" id="main">
-      <div class="page-head">
-        <div class="wrap">
-          <span class="eyebrow"><!--@profile.role--> · <!--@profile.location--></span>
-          <h1><!--@profile.name--></h1>
-          <p class="lede"><!--@profile.tagline--></p>
+      <div class="detail-head">
+        <div class="wrap wrap--narrow">
+          <a class="back-link" href="/blog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            기록 목록으로
+          </a>
+
+          {{series}}
+          <h1>{{title}}</h1>
+          <p class="lede">{{summary}}</p>
+
+          {{tags}}
+
+          <ul class="detail-meta">
+            <li><span class="detail-meta__label">쓴 날</span><span class="detail-meta__value"><time datetime="{{date}}">{{dateHuman}}</time></span></li>
+          </ul>
         </div>
       </div>
 
-      <!-- 소개 -->
-      <section class="section">
-        <div class="wrap">
+      <div class="detail-body">
+        <div class="wrap wrap--narrow">
           <article class="prose">
-            <!--@profile.bio-->
+            {{body}}
           </article>
 
-          <ul class="link-list" style="margin-top: var(--space-6)">
-            <!--@profile.links-->
-          </ul>
+          <nav class="pager" aria-label="다른 기록">
+            {{pager}}
+          </nav>
         </div>
-      </section>
-
-      <!-- 기술 -->
-      <section class="section section--alt">
-        <div class="wrap">
-          <div class="section__head">
-            <div>
-              <span class="eyebrow">Skills</span>
-              <h2>다루는 기술</h2>
-              <p>업무나 개인 프로젝트에서 실제로 배포까지 해 본 것들만 적었습니다.</p>
-            </div>
-          </div>
-
-          <ul class="skill-groups">
-            <!--@profile.skills-->
-          </ul>
-        </div>
-      </section>
-
-      <!-- 타임라인 -->
-      <section class="section">
-        <div class="wrap wrap--narrow">
-          <div class="section__head">
-            <div>
-              <span class="eyebrow">Timeline</span>
-              <h2>지나온 길</h2>
-            </div>
-          </div>
-
-          <ol class="timeline">
-            <!--@profile.timeline-->
-          </ol>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <section class="section section--tight">
-        <div class="wrap wrap--narrow">
-          <div class="cta">
-            <h2>작품을 더 보고 싶다면</h2>
-            <p>각 작품마다 무엇을 만들었고 무엇이 어려웠는지 정리해 두었습니다.</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary" href="/projects">작품 <!--@projects.count-->개 보기</a>
-              <a class="btn btn--ghost" href="/contact">연락하기</a>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
 
     <footer class="site-footer">
