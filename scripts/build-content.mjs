@@ -262,6 +262,9 @@ function validateProject(data, body, file) {
     featured: data.featured === true,
     links: {
       repo: String(links.repo ?? "").trim(),
+      // 웹에서 바로 해볼 수 없는 작품(설치형 프로그램)이 자기 소개 페이지를 가리킬 때 쓴다.
+      // demo 로 적으면 단추에 "데모 보기" 가 찍히는데, 받아서 설치하는 물건에는 맞지 않는 말이다.
+      page: String(links.page ?? "").trim(),
       demo: String(links.demo ?? "").trim(),
     },
     thumbnail: String(data.thumbnail ?? "").trim(),
@@ -487,6 +490,15 @@ function projectLinkButtons(project) {
       </a>`
     );
   }
+  if (project.links.page) {
+    out.push(
+      `<a class="btn btn--primary" href="${esc(project.links.page)}">
+        자세히 보기
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>`
+    );
+  }
+
   if (project.links.repo) {
     out.push(
       `<a class="btn btn--ghost" href="${esc(project.links.repo)}" target="_blank" rel="noopener">
