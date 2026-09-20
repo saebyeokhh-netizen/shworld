@@ -1,0 +1,509 @@
+/*
+ * Neo-Brutalism 스킨.
+ *
+ * ── 왜 따로 둔 파일인가 ───────────────────────────────────────────────────
+ *  components.css(1400줄)를 헤집는 대신, 그 뒤에 얹어 덮어쓴다. 되돌리고 싶으면
+ *  main.css 의 import 한 줄만 지우면 원래 모습으로 돌아간다. 실서비스 사이트의
+ *  겉모습을 통째로 바꾸는 일이라, 빠져나올 문을 한 칸 열어두는 값이 크다.
+ *
+ * ── 이 양식의 규칙 ────────────────────────────────────────────────────────
+ *  1) 테두리는 검정 2~3px. 경계를 흐리지 않는다
+ *  2) 그림자는 번지지 않는다. 검정 덩어리를 오른쪽 아래로 밀어 둔 것뿐이다
+ *  3) 눌리면 그림자가 0 이 되고 요소가 그 자리로 내려앉는다 — 종이를 누르는 느낌
+ *  4) 색은 적게, 세게. 노랑·코랄·파랑 셋만 쓰고 나머지는 흑백이다
+ *
+ * ── 다크 모드 ────────────────────────────────────────────────────────────
+ *  검정 배경에 검정 테두리는 보이지 않는다. 그래서 선과 그림자의 색을 변수로 두고
+ *  다크에서는 밝은 색으로 뒤집는다. 강조색은 그대로 둔다 — 그게 이 양식의 목소리다.
+ */
+
+:root {
+  /* 선과 그림자 — 다크에서 뒤집히는 두 값 */
+  --b-line: #000000;
+  --b-shadow-color: #000000;
+
+  /* 바탕 */
+  --bg: #fffdf9;
+  --bg-alt: #fef08a;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #fffdf9;
+
+  --ink: #000000;
+  --ink-body: #16161a;
+  --ink-muted: #44444c;
+  --ink-faint: #6b6b74;
+
+  --line: #000000;
+  --line-strong: #000000;
+
+  /* 강조 셋 */
+  --b-yellow: #fef08a;
+  --b-coral: #ff6b57;
+  --b-blue: #3b5bff;
+
+  --accent: var(--b-coral);
+  --accent-ink: #c0341f;   /* 코랄 계열의 어두운 쪽 — 작은 글자에 쓴다 */
+  --accent-soft: var(--b-yellow);
+  --accent-contrast: #000000;
+
+  /* 모서리는 거의 직각. 알약만 예외다 */
+  --radius-xs: 0px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+
+  /* 번지지 않는 그림자 */
+  --shadow-sm: 3px 3px 0 0 var(--b-shadow-color);
+  --shadow-md: 4px 4px 0 0 var(--b-shadow-color);
+  --shadow-lg: 6px 6px 0 0 var(--b-shadow-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --b-line: #fffdf9;
+    --b-shadow-color: #fffdf9;
+
+    --bg: #12120f;
+    --bg-alt: #1b1b16;
+    --surface: #1b1b16;
+    --surface-raised: #232320;
+    --surface-sunken: #121210;
+
+    --ink: #fffdf9;
+    --ink-body: #eeece6;
+    --ink-muted: #b9b7b0;
+    --ink-faint: #8f8d87;
+
+    --line: #fffdf9;
+    --line-strong: #fffdf9;
+
+    --accent: var(--b-coral);
+    --accent-contrast: #000000;
+  }
+}
+
+:root[data-theme="dark"] {
+  --b-line: #fffdf9;
+  --b-shadow-color: #fffdf9;
+
+  --bg: #12120f;
+  --bg-alt: #1b1b16;
+  --surface: #1b1b16;
+  --surface-raised: #232320;
+  --surface-sunken: #121210;
+
+  --ink: #fffdf9;
+  --ink-body: #eeece6;
+  --ink-muted: #b9b7b0;
+  --ink-faint: #8f8d87;
+
+  --line: #fffdf9;
+  --line-strong: #fffdf9;
+
+  --accent: var(--b-coral);
+  --accent-contrast: #000000;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   유틸리티 — 테두리 / 그림자 / 눌림
+   Tailwind 의 border-*·shadow-* 자리에 해당하는 것들을 이름으로 고정해 둔다.
+   ═══════════════════════════════════════════════════════════════ */
+
+.b-border {
+  border: 2px solid var(--b-line);
+}
+.b-border-thick {
+  border: 3px solid var(--b-line);
+}
+
+.b-shadow {
+  box-shadow: 4px 4px 0 0 var(--b-shadow-color);
+}
+.b-shadow-lg {
+  box-shadow: 6px 6px 0 0 var(--b-shadow-color);
+}
+
+/*
+ * 눌림. 그림자를 0 으로 줄이면서 그만큼 요소를 오른쪽 아래로 옮긴다.
+ * 두 값이 같아야 "그림자 위로 내려앉는" 것처럼 보이고, 어긋나면 그냥 흔들린다.
+ */
+.b-press {
+  transition:
+    transform 90ms ease-out,
+    box-shadow 90ms ease-out;
+}
+.b-press:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--b-shadow-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-press {
+    transition: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   공용 뼈대
+   ═══════════════════════════════════════════════════════════════ */
+
+body {
+  background: var(--bg);
+}
+
+.site-header {
+  border-bottom: 3px solid var(--b-line);
+  background: var(--bg);
+  backdrop-filter: none;
+}
+
+.brand__mark {
+  border: 2px solid var(--b-line);
+  border-radius: 0;
+  background: var(--b-yellow);
+  color: #000;
+  box-shadow: 2px 2px 0 0 var(--b-shadow-color);
+}
+
+.brand__text {
+  letter-spacing: -0.02em;
+}
+
+.site-nav__list a {
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill, 999px);
+  font-weight: 700;
+}
+.site-nav__list a:hover,
+.site-nav__list a[aria-current="page"] {
+  border-color: var(--b-line);
+  background: var(--b-yellow);
+  color: #000;
+}
+
+.nav-toggle,
+.theme-toggle {
+  border: 2px solid var(--b-line);
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: 3px 3px 0 0 var(--b-shadow-color);
+  transition:
+    transform 90ms ease-out,
+    box-shadow 90ms ease-out;
+}
+.nav-toggle:active,
+.theme-toggle:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--b-shadow-color);
+}
+
+/* ── 단추 ──────────────────────────────────────────────────────── */
+
+.btn {
+  border: 2px solid var(--b-line);
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: 4px 4px 0 0 var(--b-shadow-color);
+  transition:
+    transform 90ms ease-out,
+    box-shadow 90ms ease-out,
+    background-color 90ms ease-out;
+}
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--b-shadow-color);
+}
+
+.btn--primary {
+  background: var(--b-coral);
+  color: #000;
+}
+.btn--primary:hover {
+  background: var(--b-yellow);
+  color: #000;
+}
+
+.btn--ghost,
+.btn--secondary {
+  background: var(--surface);
+  color: var(--ink);
+}
+.btn--ghost:hover,
+.btn--secondary:hover {
+  background: var(--b-yellow);
+  color: #000;
+}
+
+.btn[disabled] {
+  box-shadow: none;
+  transform: none;
+  opacity: 0.5;
+}
+
+/* ── 스티커 라벨 ───────────────────────────────────────────────── */
+
+.eyebrow {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 2px solid var(--b-line);
+  border-radius: 999px;
+  background: var(--b-blue);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  box-shadow: 3px 3px 0 0 var(--b-shadow-color);
+  /* 스티커처럼 살짝 비뚤게 붙인다 */
+  transform: rotate(-2deg);
+}
+
+/* ── 태그 칩 ───────────────────────────────────────────────────── */
+
+.tag,
+.chip {
+  border: 2px solid var(--b-line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+}
+.chip[aria-pressed="true"] {
+  background: var(--b-yellow);
+  color: #000;
+  box-shadow: 2px 2px 0 0 var(--b-shadow-color);
+}
+
+/* ── 카드 ──────────────────────────────────────────────────────── */
+
+.card {
+  border: 3px solid var(--b-line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 6px 6px 0 0 var(--b-shadow-color);
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out;
+}
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 0 var(--b-shadow-color);
+}
+.card__thumb {
+  border-bottom: 3px solid var(--b-line);
+}
+.card__title a {
+  font-weight: 800;
+}
+
+/* 대표작 표시는 스티커로 */
+.card--featured .card__thumb::after {
+  content: "FEATURED";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 10px;
+  border: 2px solid var(--b-line);
+  border-radius: 999px;
+  background: var(--b-yellow);
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  box-shadow: 2px 2px 0 0 var(--b-shadow-color);
+  transform: rotate(-3deg);
+}
+
+/* ── 히어로 ────────────────────────────────────────────────────── */
+
+.hero {
+  border-bottom: 3px solid var(--b-line);
+}
+/*
+ * 바탕은 오프화이트로 둔다. 히어로까지 노랗게 칠했더니 아래 대표작 구역과 맞붙어
+ * 화면 절반이 노랑 한 덩어리가 됐다 — 강조색은 넓게 깔면 강조가 아니게 된다.
+ * 대신 굵은 격자를 옅게 깔아 종이 느낌만 남긴다.
+ */
+.hero::before {
+  background-image:
+    linear-gradient(var(--b-line) 2px, transparent 2px),
+    linear-gradient(90deg, var(--b-line) 2px, transparent 2px);
+  background-size: 5rem 5rem;
+  mask-image: radial-gradient(ellipse 70% 60% at 25% 0%, #000 10%, transparent 70%);
+  opacity: 0.07;
+}
+.hero h1 {
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+.hero__name {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--ink);
+}
+.hero__lede {
+  font-weight: 600;
+}
+
+.hero__meta {
+  border-top: 3px solid var(--b-line);
+}
+.hero__meta strong {
+  font-family: inherit;
+  font-weight: 900;
+}
+
+.hero__work-frame {
+  border: 3px solid var(--b-line);
+  border-radius: var(--radius-lg);
+  box-shadow: 6px 6px 0 0 var(--b-shadow-color);
+}
+.hero__work:hover .hero__work-frame {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 0 var(--b-shadow-color);
+}
+
+/* ── 구역 ──────────────────────────────────────────────────────── */
+
+/*
+ * 강조 구역. 밝은 화면에서는 노란 판이지만 다크에서까지 #FEF08A 를 전폭으로 깔면
+ * 어두운 화면에서 이 띠만 형광등처럼 튄다. 그래서 테마를 따라가는 --bg-alt 를 쓰고,
+ * 노랑은 위쪽 테두리 한 줄로만 남겨 강조의 정체성을 유지한다.
+ */
+.section--alt {
+  background: var(--bg-alt);
+  border-block: 3px solid var(--b-line);
+}
+.section h2 {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+:root[data-theme="dark"] .section--alt,
+:root[data-theme="dark"] .site-footer {
+  border-top-color: var(--b-yellow);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .section--alt,
+  :root:not([data-theme="light"]) .site-footer {
+    border-top-color: var(--b-yellow);
+  }
+}
+
+/* ── 바닥글 ────────────────────────────────────────────────────── */
+
+.site-footer {
+  border-top: 3px solid var(--b-line);
+  background: var(--bg-alt);
+}
+
+.share-btn:not(.btn) {
+  border: 2px solid var(--b-line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 700;
+  box-shadow: 3px 3px 0 0 var(--b-shadow-color);
+  transition:
+    transform 90ms ease-out,
+    box-shadow 90ms ease-out;
+}
+.share-btn:not(.btn):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--b-shadow-color);
+}
+
+/* ── 그 밖의 판들 ──────────────────────────────────────────────── */
+
+.panel,
+.skill-group,
+.detail-head,
+.prose pre,
+.prose blockquote,
+.form input,
+.form textarea,
+.guestbook__item {
+  border: 2px solid var(--b-line);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+.prose table {
+  border: 2px solid var(--b-line);
+}
+.prose :is(th, td) {
+  border: 1px solid var(--b-line);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   흐르는 띠 (marquee)
+   ═══════════════════════════════════════════════════════════════ */
+
+/*
+ * 같은 문구 묶음을 두 벌 나란히 두고 정확히 절반만큼 민다. 한 바퀴가 끝나는 순간
+ * 두 번째 벌이 첫 번째 자리에 와 있어 이음매가 보이지 않는다.
+ */
+.ticker {
+  overflow: hidden;
+  border-block: 3px solid var(--b-line);
+  background: var(--b-blue);
+  color: #fff;
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-roll 26s linear infinite;
+}
+
+.ticker__group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-block: var(--space-3);
+  padding-right: var(--space-6);
+  font-size: var(--text-md);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.ticker__group b {
+  font-weight: 900;
+}
+
+.ticker__sep {
+  color: var(--b-yellow);
+}
+
+@keyframes ticker-roll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 움직임을 줄여달라고 한 사람에게는 멈춰 세운다 */
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track {
+    animation: none;
+  }
+}
+
+/* 좁은 화면에서는 글자를 한 단계 줄여 한 줄에 더 담는다 */
+@media (max-width: 38rem) {
+  .ticker__group {
+    font-size: var(--text-sm);
+    gap: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .eyebrow {
+    transform: none;
+  }
+}
