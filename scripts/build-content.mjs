@@ -711,7 +711,25 @@ async function writeSitemap(projects, profile, posts) {
   // 넘어가는 주소가 아니라 넘어간 뒤의 주소를 적는다. 사이트맵은 '여기를 거둬
   // 가라'고 내미는 목록인데, 거기 적힌 것이 죄다 다른 주소로 넘어가면 크롤러는
   // 같은 걸음을 두 번씩 걷게 되고 정식 주소도 흐려진다.
-  const pages = ["/", "/projects", "/blog", "/about", "/guestbook", "/contact", "/privacy"];
+  /*
+   * 이 저장소가 직접 만드는 페이지들.
+   *
+   * /jhcalender 는 메뉴에 걸려 있지 않아 링크를 타고 닿을 수가 없다. 사이트맵에서도
+   * 빠지면 사실상 주소를 아는 사람만 볼 수 있는 페이지가 된다 — 윈도우 프로그램을
+   * 받으러 오는 사람이 찾아야 하는 자리이고, 구글 계정 연동 심사도 그 처리방침 주소를
+   * 확인하므로 검색에 잡히는 편이 낫다.
+   */
+  const pages = [
+    "/",
+    "/projects",
+    "/blog",
+    "/about",
+    "/guestbook",
+    "/contact",
+    "/privacy",
+    "/jhcalender/",
+    "/jhcalender/privacy",
+  ];
   const urls = [
     ...pages.map((p) => ({ loc: profile.siteUrl + p, lastmod: null })),
     ...projects.map((p) => ({ loc: `${profile.siteUrl}/projects/${p.slug}`, lastmod: p.date })),
