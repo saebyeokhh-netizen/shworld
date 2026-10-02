@@ -25,9 +25,9 @@ thumbnail: /img/projects/bbdd.svg
 
 ## 받아 쓰기
 
-[**Microsoft Store 에서 받기**](https://apps.microsoft.com/detail/9NQVM3GVNZGB)
+[**Microsoft Store 에서 받기**](https://apps.microsoft.com/detail/9nqvm3gvnzgb?hl=ko-KR&gl=KR)
 
-2026년 10월 2일부터 스토어에 올라가 있습니다. **이 길을 권합니다** — 마이크로소프트가 대신 서명해 주기 때문에 백신이 잡지 않고, 새 버전이 나오면 알아서 갱신됩니다.
+**2026년 10월 2일 출시했습니다.** **이 길을 권합니다** — 마이크로소프트가 대신 서명해 주기 때문에 백신이 잡지 않고, 새 버전이 나오면 알아서 갱신됩니다.
 
 [압축본으로 받기 (Windows · 45MB)](https://pub-a85cd74aa6d44cf48f7cbdbee91738b6.r2.dev/bbdd-latest.zip)
 
