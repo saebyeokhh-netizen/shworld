@@ -491,8 +491,11 @@ function projectLinkButtons(project) {
     );
   }
   if (project.links.page) {
+    // 바깥 주소면 새 탭에서 연다. 작품을 보다가 현재 탭이 남의 사이트로 넘어가 버리면
+    // 포트폴리오로 돌아오려면 뒤로 가기를 눌러야 한다.
+    const pageOut = /^https?:/i.test(project.links.page) ? ' target="_blank" rel="noopener"' : "";
     out.push(
-      `<a class="btn btn--primary" href="${esc(project.links.page)}">
+      `<a class="btn btn--primary" href="${esc(project.links.page)}"${pageOut}>
         자세히 보기
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>`
